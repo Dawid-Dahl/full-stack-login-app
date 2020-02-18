@@ -1,0 +1,15 @@
+@mixin corners {
+	border-radius: 10px;
+}
+
+@mixin button {
+	margin: 10px;
+	padding: 10px;
+	font-size: 1em;
+	outline: none;
+	transition: all 0.5s;
+}
+
+@mixin font {
+	font-family: "system-ui";
+}
