@@ -1,8 +1,8 @@
 import express from "express";
-import registrationRouter from "./registration";
+import registerRouter from "./register";
 
 const apiRouter = express.Router();
 
-apiRouter.use("/registration", registrationRouter);
+apiRouter.use("/register", registerRouter);
 
 export default apiRouter;

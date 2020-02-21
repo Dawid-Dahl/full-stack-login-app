@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import Input from "./Input";
 
 type FormState = {
 	username: string;
@@ -8,7 +9,6 @@ type FormState = {
 };
 
 const sendFormDataToServer = (url: string, formState: FormState) => {
-	console.log(url, formState);
 	fetch(url, {
 		method: "POST",
 		headers: {
@@ -39,34 +39,39 @@ const Form = () => {
 				onSubmit={e => {
 					e.preventDefault();
 					sendFormDataToServer(
-						"http://localhost:5000/api/registration",
+						"http://localhost:5000/api/register",
 						turnFormStateIntoObj()
 					);
+					e.currentTarget.reset();
 				}}
 			>
-				<input
-					id="username"
+				<Input
+					name="username"
 					type="text"
-					placeholder="Username"
-					onChange={e => setUsername(e.target.value)}
+					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+						setUsername(e.target.value)
+					}
 				/>
-				<input
-					id="email"
+				<Input
+					name="email"
 					type="email"
-					placeholder="E-mail"
-					onChange={e => setEmail(e.target.value)}
+					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+						setEmail(e.target.value)
+					}
 				/>
-				<input
-					id="password"
+				<Input
+					name="password"
 					type="password"
-					placeholder="Password"
-					onChange={e => setPassword(e.target.value)}
+					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+						setPassword(e.target.value)
+					}
 				/>
-				<input
-					id="re-enter-password"
+				<Input
+					name="re-enter-password"
 					type="password"
-					placeholder="Re-enter Password"
-					onChange={e => setreEnterPassword(e.target.value)}
+					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
+						setreEnterPassword(e.target.value)
+					}
 				/>
 				<button type="submit" id="login-button">
 					Login
