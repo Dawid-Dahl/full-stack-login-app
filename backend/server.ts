@@ -1,6 +1,5 @@
 import express from "express";
 import apiRouter from "./api/routes/api";
-import sqlite3 from "sqlite3";
 
 const cors = require("cors");
 const errorhandler = require("errorhandler");
