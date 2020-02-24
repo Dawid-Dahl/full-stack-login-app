@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Input from "./Input";
+import {checkIfPasswordsMatch} from "../utils/utils";
 
 type FormState = {
 	username: string;
@@ -38,11 +39,15 @@ const Form = () => {
 				className="form"
 				onSubmit={e => {
 					e.preventDefault();
-					sendFormDataToServer(
-						"http://localhost:5000/api/register",
-						turnFormStateIntoObj()
-					);
-					e.currentTarget.reset();
+					if (checkIfPasswordsMatch(password, reEnterPassword)) {
+						sendFormDataToServer(
+							"http://localhost:5000/api/register",
+							turnFormStateIntoObj()
+						);
+						e.currentTarget.reset();
+					} else {
+						alert("Passwords must match.");
+					}
 				}}
 			>
 				<Input
@@ -51,6 +56,7 @@ const Form = () => {
 					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setUsername(e.target.value)
 					}
+					required
 				/>
 				<Input
 					name="email"
@@ -58,6 +64,7 @@ const Form = () => {
 					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setEmail(e.target.value)
 					}
+					required
 				/>
 				<Input
 					name="password"
@@ -65,6 +72,9 @@ const Form = () => {
 					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setPassword(e.target.value)
 					}
+					required
+					pattern={`(?=.*[0-9])[a-zA-Z0-9%?\/<~#!@$^&*()+=}:;,åäöÅÄÖ>{]{5,}`}
+					title="Must contain at least one uppercase or lowercase letter and one number, and be longer than 4 characters."
 				/>
 				<Input
 					name="re-enter-password"
@@ -72,6 +82,9 @@ const Form = () => {
 					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
 						setreEnterPassword(e.target.value)
 					}
+					required
+					pattern={`(?=.*[0-9])[a-zA-Z0-9%?\/<~#!@$^&*()+=}:;,åäöÅÄÖ>{]{5,}`}
+					title="Must contain at least one uppercase or lowercase letter and one number, and be longer than 4 characters."
 				/>
 				<button type="submit" id="login-button">
 					Login

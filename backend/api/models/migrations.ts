@@ -1,8 +1,12 @@
 import sqlite3 from "sqlite3";
 import {Tables} from "../types/enums";
+import {config} from "dotenv";
 
-const dbPath =
-	"/Volumes/Seagate Backup Plus Drive/Dawid Programming Files/Practice Projects/full-stack-login-app/backend/db/full-stack-login-app.db";
+config({
+	path: "../../.env"
+});
+
+const dbPath = process.env.DB_PATH || "";
 
 const db = new sqlite3.Database(dbPath, err =>
 	err ? console.error(err) : console.log("Connected to the SQLite database")

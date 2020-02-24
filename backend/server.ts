@@ -1,11 +1,10 @@
 import express from "express";
 import apiRouter from "./api/routes/api";
+import "dotenv/config";
 
 const cors = require("cors");
 const errorhandler = require("errorhandler");
 const morgan = require("morgan");
-
-require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
