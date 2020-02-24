@@ -1,6 +1,7 @@
 import express from "express";
 import {check} from "express-validator";
 import {registerController} from "../controllers/registerController";
+import {myLogger} from "../utils/middleware";
 
 const regex = new RegExp(/^(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9%?<~#!@$^&*()+=:";',åäö>{]{5,}$/i);
 
@@ -25,7 +26,8 @@ registerRouter.post(
 			.matches(regex),
 		check("confirmPassword", "Password confirmation does not match password")
 			.notEmpty()
-			.custom((val, {req}) => val === req.body.password)
+			.custom((val, {req}) => val === req.body.password),
+		myLogger
 	],
 	registerController
 );

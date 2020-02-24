@@ -12,8 +12,6 @@ export const registerController = (req: Request, res: Response) => {
 	const errors = validationResult(req);
 
 	const {username, email, password} = req.body;
-	console.log(req.body);
-	console.log(errors);
 
 	if (errors.isEmpty()) {
 		bcrypt.hash(password, 10).then(hash => {
