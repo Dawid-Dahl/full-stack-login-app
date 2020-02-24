@@ -1,7 +1,6 @@
 import express from "express";
 import apiRouter from "./api/routes/api";
 import "dotenv/config";
-import {myLogger} from "./api/utils/middleware";
 
 const cors = require("cors");
 const errorhandler = require("errorhandler");

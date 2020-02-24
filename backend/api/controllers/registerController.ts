@@ -4,7 +4,7 @@ import {Response, Request} from "express";
 import {Tables} from "../types/enums";
 import bcrypt from "bcrypt";
 
-export const registerController = (req: Request, res: Response) => {
+const registerController = (req: Request, res: Response) => {
 	const db = new sqlite3.Database("./db/full-stack-login-app.db", err =>
 		err ? console.error(err) : console.log("Connected to the SQLite database")
 	);
@@ -37,3 +37,5 @@ export const registerController = (req: Request, res: Response) => {
 		);
 	}
 };
+
+export default registerController;

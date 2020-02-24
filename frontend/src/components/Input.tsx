@@ -11,7 +11,7 @@ type Props = {
 	title?: string;
 };
 
-export const Input: React.FC<Props> = ({name, type, onChangleHandle, required, pattern, title}) => (
+const Input: React.FC<Props> = ({name, type, onChangleHandle, required, pattern, title}) => (
 	<input
 		id={name}
 		name={name}

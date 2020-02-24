@@ -1,13 +1,10 @@
-@import "./sass/variables", "./sass/mixins", "./components/Form.scss", "./components/Input.scss";
+@import "./sass/variables", "./sass/mixins", "./components/Form.scss", "./components/Input.scss",
+	"./components/Registration.scss", "./components/Login.scss";
 
 html {
 	font-size: 16px;
 	@include font;
 	background: linear-gradient(34deg, rgba(34, 143, 195, 1) 0%, rgba(153, 45, 253, 1) 100%);
-}
-
-.registration {
-	color: white;
 }
 
 .wrap {

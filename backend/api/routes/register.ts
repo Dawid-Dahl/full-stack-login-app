@@ -1,6 +1,6 @@
 import express from "express";
 import {check} from "express-validator";
-import {registerController} from "../controllers/registerController";
+import registerController from "../controllers/registerController";
 import {myLogger} from "../utils/middleware";
 
 const regex = new RegExp(/^(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9%?<~#!@$^&*()+=:";',åäö>{]{5,}$/i);
@@ -8,7 +8,7 @@ const regex = new RegExp(/^(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9%?<~#!@$^&*()+=:";',�
 const registerRouter = express.Router();
 
 registerRouter.get("/", (req, res) => {
-	res.send("This is the registration!");
+	res.send("<h2>This is the backend registration route!</h2>");
 });
 
 registerRouter.post(

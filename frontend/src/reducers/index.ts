@@ -1,3 +1,5 @@
+import {ActionTypes} from "../actions/actions";
+
 enum ActionSuffix {
 	fulfilled = "FULFILLED",
 	pending = "PENDING",
