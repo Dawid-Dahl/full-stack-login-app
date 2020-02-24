@@ -6,7 +6,7 @@ type FormState = {
 	username: string;
 	email: string;
 	password: string;
-	reEnterPassword: string;
+	confirmPassword: string;
 };
 
 const sendFormDataToServer = (url: string, formState: FormState) => {
@@ -23,13 +23,13 @@ const Form = () => {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [reEnterPassword, setreEnterPassword] = useState("");
+	const [confirmPassword, setconfirmPassword] = useState("");
 
 	const turnFormStateIntoObj = (): FormState => ({
 		username,
 		email,
 		password,
-		reEnterPassword
+		confirmPassword
 	});
 
 	return (
@@ -39,15 +39,11 @@ const Form = () => {
 				className="form"
 				onSubmit={e => {
 					e.preventDefault();
-					if (checkIfPasswordsMatch(password, reEnterPassword)) {
-						sendFormDataToServer(
-							"http://localhost:5000/api/register",
-							turnFormStateIntoObj()
-						);
-						e.currentTarget.reset();
-					} else {
-						alert("Passwords must match.");
-					}
+					sendFormDataToServer(
+						"http://localhost:5000/api/register",
+						turnFormStateIntoObj()
+					);
+					e.currentTarget.reset();
 				}}
 			>
 				<Input
@@ -73,18 +69,14 @@ const Form = () => {
 						setPassword(e.target.value)
 					}
 					required
-					pattern={`(?=.*[0-9])[a-zA-Z0-9%?\/<~#!@$^&*()+=}:;,åäöÅÄÖ>{]{5,}`}
-					title="Must contain at least one uppercase or lowercase letter and one number, and be longer than 4 characters."
 				/>
 				<Input
-					name="re-enter-password"
+					name="confirm-password"
 					type="password"
 					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
-						setreEnterPassword(e.target.value)
+						setconfirmPassword(e.target.value)
 					}
 					required
-					pattern={`(?=.*[0-9])[a-zA-Z0-9%?\/<~#!@$^&*()+=}:;,åäöÅÄÖ>{]{5,}`}
-					title="Must contain at least one uppercase or lowercase letter and one number, and be longer than 4 characters."
 				/>
 				<button type="submit" id="login-button">
 					Login

@@ -1,2 +1,2 @@
-export const checkIfPasswordsMatch = (password: string, reEnteredPassword: string) =>
-	password === reEnteredPassword ? true : false;
+export const checkIfPasswordsMatch = (password: string, confirmPassword: string) =>
+	password === confirmPassword ? true : false;

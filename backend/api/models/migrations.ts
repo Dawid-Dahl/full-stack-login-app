@@ -18,11 +18,12 @@ db.serialize(() => {
 	);
 	db.run(
 		`CREATE TABLE IF NOT EXISTS ${Tables.users} (
-    "id" INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
-    "username" TEXT NOT NULL,
-    "email" TEXT NOT NULL UNIQUE,
-	"password" TEXT NOT NULL);
-	"date_added" INTEGER`,
+			"id" INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+			"username" TEXT NOT NULL,
+			"email" TEXT NOT NULL UNIQUE,
+			"password" TEXT NOT NULL,
+			"date_added" TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+		);`,
 		err => (err ? console.error(err) : console.log(`Table ${Tables.users} added successfully`))
 	);
 });
