@@ -3,9 +3,13 @@ import sqlite3 from "sqlite3";
 import {Response, Request} from "express";
 import {Tables} from "../types/enums";
 import bcrypt from "bcrypt";
+import {config} from "dotenv";
+config();
+
+const dbPath = process.env.DB_PATH || "";
 
 const registerController = (req: Request, res: Response) => {
-	const db = new sqlite3.Database("./db/full-stack-login-app.db", err =>
+	const db = new sqlite3.Database(dbPath, err =>
 		err ? console.error(err) : console.log("Connected to the SQLite database")
 	);
 

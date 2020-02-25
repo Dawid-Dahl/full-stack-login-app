@@ -1,13 +1,17 @@
 import express from "express";
 import apiRouter from "./api/routes/api";
 import "dotenv/config";
-
-const cors = require("cors");
-const errorhandler = require("errorhandler");
-const morgan = require("morgan");
+import passport from "passport";
+import {Strategy as LocalStrategy} from "passport-local";
+import cors from "cors";
+import errorhandler from "errorhandler";
+import morgan from "morgan";
+import sqlite3 from "sqlite3";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+passport.use(new LocalStrategy((username, password, cb) => {}));
 
 app.use(express.json());
 app.use(cors());
