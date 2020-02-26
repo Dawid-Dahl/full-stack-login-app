@@ -1,25 +1,13 @@
 import React, {useState} from "react";
 import Input from "./Input";
-import {checkIfPasswordsMatch} from "../utils/utils";
+import {FormState} from "../types/types";
 
-type FormState = {
-	username: string;
-	email: string;
-	password: string;
-	confirmPassword: string;
+type Props = {
+	postFetchAction: (url: string, formState: FormState) => void;
+	postUrl: string;
 };
 
-const sendFormDataToServer = (url: string, formState: FormState) => {
-	fetch(url, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(formState)
-	});
-};
-
-const Form = () => {
+const Form: React.FC<Props> = ({postFetchAction, postUrl}) => {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -39,10 +27,7 @@ const Form = () => {
 				className="form"
 				onSubmit={e => {
 					e.preventDefault();
-					sendFormDataToServer(
-						"http://localhost:5000/api/register",
-						turnFormStateIntoObj()
-					);
+					postFetchAction(postUrl, turnFormStateIntoObj());
 					e.currentTarget.reset();
 				}}
 			>

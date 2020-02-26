@@ -1,9 +1,11 @@
 import express from "express";
 import {check} from "express-validator";
-import registerController from "../controllers/registerController";
+import registerControllerPost from "../controllers/registerControllerPost";
 import {myLogger} from "../utils/middleware";
 
-const regex = new RegExp(/^(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9%?<~#!@$^&*()+=:";',åäö>{]{5,}$/i);
+const passwordRegex = new RegExp(
+	/^(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9%?<_~#!@$^&*()+=:";',åäö>{]{5,}$/i
+);
 
 const registerRouter = express.Router();
 
@@ -14,6 +16,7 @@ registerRouter.get("/", (req, res) => {
 registerRouter.post(
 	"/",
 	[
+		check("username").trim(),
 		check("email", "Email must be a valid")
 			.notEmpty()
 			.isEmail()
@@ -23,13 +26,13 @@ registerRouter.post(
 			"Password must be longer than 4 characters, and contain letters and numbers"
 		)
 			.notEmpty()
-			.matches(regex),
+			.matches(passwordRegex),
 		check("confirmPassword", "Password confirmation does not match password")
 			.notEmpty()
 			.custom((val, {req}) => val === req.body.password),
 		myLogger
 	],
-	registerController
+	registerControllerPost
 );
 
 export default registerRouter;

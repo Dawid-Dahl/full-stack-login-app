@@ -8,7 +8,7 @@ config();
 
 const dbPath = process.env.DB_PATH || "";
 
-const registerController = (req: Request, res: Response) => {
+const registerControllerPost = (req: Request, res: Response) => {
 	const db = new sqlite3.Database(dbPath, err =>
 		err ? console.error(err) : console.log("Connected to the SQLite database")
 	);
@@ -19,7 +19,7 @@ const registerController = (req: Request, res: Response) => {
 
 	if (errors.isEmpty()) {
 		bcrypt.hash(password, 10).then(hash => {
-			const values = [username, email, hash];
+			const values = [username.toLowerCase(), email, hash];
 			const sql = `INSERT INTO ${Tables.users} (username, email, password) VALUES (?, ?, ?);`;
 
 			db.run(sql, values, err => {
@@ -42,4 +42,4 @@ const registerController = (req: Request, res: Response) => {
 	}
 };
 
-export default registerController;
+export default registerControllerPost;

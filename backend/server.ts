@@ -1,21 +1,27 @@
 import express from "express";
 import apiRouter from "./api/routes/api";
 import "dotenv/config";
-import passport from "passport";
-import {Strategy as LocalStrategy} from "passport-local";
 import cors from "cors";
 import errorhandler from "errorhandler";
 import morgan from "morgan";
-import sqlite3 from "sqlite3";
+import initializeLocalStrategy from "./api/config/passport-config";
+import session from "express-session";
+import passport from "passport";
+import flash from "express-flash";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-passport.use(new LocalStrategy((username, password, cb) => {}));
+initializeLocalStrategy();
 
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
+app.use(flash());
+app.use(session({secret: "lollercauster", resave: false, saveUninitialized: false}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/api", apiRouter);
 

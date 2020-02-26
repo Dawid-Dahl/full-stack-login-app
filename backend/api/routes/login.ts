@@ -1,12 +1,12 @@
 import express from "express";
-import registerController from "../controllers/registerController";
+import passport from "passport";
 
 const loginRouter = express.Router();
 
 loginRouter.get("/", (req, res) => {
-	res.status(200).send("<h2>This is the backend login route.</h2>");
+	res.status(200).send(`<h2>This is the Login GET route.</h2>`);
 });
 
-loginRouter.post("/", registerController);
+loginRouter.post("/", passport.authenticate("local"));
 
 export default loginRouter;
