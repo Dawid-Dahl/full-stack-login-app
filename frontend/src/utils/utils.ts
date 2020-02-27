@@ -30,5 +30,7 @@ export const sendLoginFormDataToServer = (url: string, formState: FormState) => 
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify(formState)
-	});
+	})
+		.then(res => res.text())
+		.then(data => console.log(data));
 };

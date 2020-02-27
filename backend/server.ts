@@ -17,8 +17,14 @@ initializeLocalStrategy();
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
+app.use(
+	session({
+		secret: "lollercauster",
+		resave: false,
+		saveUninitialized: false
+	})
+);
 app.use(flash());
-app.use(session({secret: "lollercauster", resave: false, saveUninitialized: false}));
 
 app.use(passport.initialize());
 app.use(passport.session());

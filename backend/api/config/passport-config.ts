@@ -4,6 +4,7 @@ import sqlite3 from "sqlite3";
 import {Tables} from "../types/enums";
 import bcrypt from "bcrypt";
 import {config} from "dotenv";
+import {User} from "../types/types";
 config();
 
 const initializeLocalStrategy = () => {
@@ -11,28 +12,51 @@ const initializeLocalStrategy = () => {
 
 	passport.use(
 		new LocalStrategy((username, password, done) => {
-			console.log(`This is the username object: ${username}`);
-			console.log(`This is the password obj: ${password}`);
-
 			const db = new sqlite3.Database(dbPath, err =>
 				err ? console.error(err) : console.log("Connected to the SQLite database")
 			);
 
-			const sql = `SELECT username FROM ${Tables.users} WHERE username = ?;`;
+			const sql = `SELECT * FROM ${Tables.users} WHERE username = ?;`;
 
-			db.get(sql, username, (err, row) => {
-				console.log(`This is the SQL row: ${row.username}`);
-				console.log(`This is the SQL err: ${err}`);
-
+			db.get(sql, username.toLowerCase(), async (err, row) => {
 				db.close(err =>
 					err ? console.error(err) : console.log("Closed the database connection")
 				);
+				if (err) return done(err);
+				if (!row) return done(null, false, {message: "Incorrect user"});
+
+				const isValidPassword = await bcrypt.compare(password, row.password);
+
+				if (!isValidPassword) {
+					console.log("Failed encryption test!");
+					return done(null, false, {message: "Incorrect password."});
+				}
+
+				console.log("Passed encryption test!");
+				return done(null, row);
 			});
 		})
 	);
 
-	passport.serializeUser((user, done) => {});
-	passport.deserializeUser((id, done) => {});
+	passport.serializeUser((user: User, done) => {
+		done(null, user.username);
+	});
+	passport.deserializeUser((id, done) => {
+		const db = new sqlite3.Database(dbPath, err =>
+			err ? console.error(err) : console.log("Connected to the SQLite database")
+		);
+
+		const sql = `SELECT username FROM ${Tables.users} WHERE username = ?;`;
+
+		db.get(sql, id, (err, row) => {
+			db.close(err =>
+				err ? console.error(err) : console.log("Closed the database connection")
+			);
+			if (err) return done(err);
+			if (!row) return done(null, false);
+			return done(null, row);
+		});
+	});
 };
 
 export default initializeLocalStrategy;
