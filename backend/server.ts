@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5000;
 initializeLocalStrategy();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({credentials: true, origin: "http://localhost:1234"}));
 app.use(morgan("dev"));
 app.use(
 	session({

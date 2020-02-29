@@ -8,6 +8,7 @@ loginRouter.get("/", (req, res) => {
 });
 
 loginRouter.post("/", passport.authenticate("local", {failureRedirect: "/login"}), (req, res) => {
+	console.log(req.session);
 	res.send("Login correct!");
 });
 

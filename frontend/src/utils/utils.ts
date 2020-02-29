@@ -26,11 +26,10 @@ export const sendRegisterFormDataToServer = (url: string, formState: FormState) 
 export const sendLoginFormDataToServer = (url: string, formState: FormState) => {
 	fetch(url, {
 		method: "POST",
+		credentials: "include",
 		headers: {
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify(formState)
-	})
-		.then(res => res.text())
-		.then(data => console.log(data));
+	}).then(res => console.log(res));
 };
