@@ -1,23 +1,19 @@
 import React, {useState} from "react";
 import Input from "./Input";
-import {FormState} from "../types/types";
+import {LoginInformation} from "../types/types";
 
 type Props = {
-	postFetchAction: (url: string, formState: FormState) => void;
+	postFetchAction: (url: string, formState: LoginInformation) => void;
 	postUrl: string;
 };
 
-const Form: React.FC<Props> = ({postFetchAction, postUrl}) => {
-	const [username, setUsername] = useState("");
+const LoginForm: React.FC<Props> = ({postFetchAction, postUrl}) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [confirmPassword, setconfirmPassword] = useState("");
 
-	const turnFormStateIntoObj = (): FormState => ({
-		username,
+	const turnFormStateIntoObj = (): LoginInformation => ({
 		email,
-		password,
-		confirmPassword
+		password
 	});
 
 	return (
@@ -31,14 +27,6 @@ const Form: React.FC<Props> = ({postFetchAction, postUrl}) => {
 					e.currentTarget.reset();
 				}}
 			>
-				<Input
-					name="username"
-					type="text"
-					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
-						setUsername(e.target.value)
-					}
-					required
-				/>
 				<Input
 					name="email"
 					type="email"
@@ -55,14 +43,6 @@ const Form: React.FC<Props> = ({postFetchAction, postUrl}) => {
 					}
 					required
 				/>
-				<Input
-					name="confirm-password"
-					type="password"
-					onChangleHandle={(e: React.ChangeEvent<HTMLInputElement>) =>
-						setconfirmPassword(e.target.value)
-					}
-					required
-				/>
 				<button type="submit" id="login-button">
 					Login
 				</button>
@@ -71,4 +51,4 @@ const Form: React.FC<Props> = ({postFetchAction, postUrl}) => {
 	);
 };
 
-export default Form;
+export default LoginForm;

@@ -11,20 +11,21 @@ const initializeLocalStrategy = () => {
 	const dbPath = process.env.DB_PATH || "";
 
 	passport.use(
-		new LocalStrategy((username, password, done) => {
+		new LocalStrategy({usernameField: "email"}, (email, password, done) => {
 			const db = new sqlite3.Database(dbPath, err =>
 				err ? console.error(err) : console.log("Connected to the SQLite database")
 			);
 
-			const sql = `SELECT * FROM ${Tables.users} WHERE username = ?;`;
+			const sql = `SELECT * FROM ${Tables.users} WHERE email = ?;`;
 
-			db.get(sql, username.toLowerCase(), async (err, row) => {
+			db.get(sql, email.toLowerCase(), async (err, row) => {
 				db.close(err =>
 					err ? console.error(err) : console.log("Closed the database connection")
 				);
 				if (err) return done(err);
 				if (!row) return done(null, false, {message: "Incorrect user"});
 
+				// is_valid_password
 				const isValidPassword = await bcrypt.compare(password, row.password);
 
 				if (!isValidPassword) {
@@ -39,9 +40,11 @@ const initializeLocalStrategy = () => {
 	);
 
 	passport.serializeUser((user: User, done) => {
+		console.log("INSIDE SERIALIZATION!");
 		done(null, user.username);
 	});
 	passport.deserializeUser((id, done) => {
+		console.log("INSIDE DE-SERIALIZATION!");
 		const db = new sqlite3.Database(dbPath, err =>
 			err ? console.error(err) : console.log("Connected to the SQLite database")
 		);
@@ -49,9 +52,9 @@ const initializeLocalStrategy = () => {
 		const sql = `SELECT username FROM ${Tables.users} WHERE username = ?;`;
 
 		db.get(sql, id, (err, row) => {
-			db.close(err =>
+			/* db.close(err =>
 				err ? console.error(err) : console.log("Closed the database connection")
-			);
+			); */
 			if (err) return done(err);
 			if (!row) return done(null, false);
 			return done(null, row);

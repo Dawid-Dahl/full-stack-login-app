@@ -4,3 +4,8 @@ export type FormState = {
 	password: string;
 	confirmPassword: string;
 };
+
+export type LoginInformation = {
+	email: string;
+	password: string;
+};

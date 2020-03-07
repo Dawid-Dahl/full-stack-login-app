@@ -1,5 +1,5 @@
 import React from "react";
-import Form from "./Form";
+import RegistrationForm from "./RegistrationForm";
 import {Link} from "react-router-dom";
 import {sendRegisterFormDataToServer} from "../utils/utils";
 
@@ -7,7 +7,7 @@ const Registration = () => {
 	return (
 		<div className="wrap">
 			<h1 className="registration">REGISTRATION</h1>
-			<Form
+			<RegistrationForm
 				postFetchAction={sendRegisterFormDataToServer}
 				postUrl="http://localhost:5000/api/register"
 			/>

@@ -1,5 +1,6 @@
-@import "./sass/variables", "./sass/mixins", "./components/Form.scss", "./components/Input.scss",
-	"./components/Registration.scss", "./components/Login.scss";
+@import "./sass/variables", "./sass/mixins", "./components/LoginForm.scss",
+	"./components/RegistrationForm.scss", "./components/Input.scss",
+	"./components/Registration.scss", "./components/Login.scss", "./components/MainPage.scss";
 
 html {
 	font-size: 16px;

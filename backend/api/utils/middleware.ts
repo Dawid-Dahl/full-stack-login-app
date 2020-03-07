@@ -8,10 +8,20 @@ export const myLogger = (req: Request, res: Response, next: NextFunction) => {
 	next();
 };
 
-const ensureAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+export const ensureAuthenticated = (req: Request, res: Response, next: NextFunction) => {
 	if (req.isAuthenticated()) {
-		return next();
+		console.log("AUTHENTICATED!");
+		next();
 	} else {
+		console.log("NOT AUTHENTICATED, redirecting!");
+		res.redirect("http://localhost:1234/login");
+	}
+};
+
+export const ensureNotAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+	if (req.isAuthenticated()) {
 		res.redirect("/");
+	} else {
+		next();
 	}
 };

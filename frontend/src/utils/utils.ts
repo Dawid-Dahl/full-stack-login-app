@@ -1,7 +1,9 @@
-import {FormState} from "../types/types";
+import {FormState, LoginInformation} from "../types/types";
 
 export const checkIfPasswordsMatch = (password: string, confirmPassword: string) =>
 	password === confirmPassword ? true : false;
+
+export const uppercaseFirstLetter = (str: string) => str[0].toUpperCase() + str.slice(1);
 
 export const sendRegisterFormDataToServer = (url: string, formState: FormState) => {
 	fetch(url, {
@@ -23,7 +25,7 @@ export const sendRegisterFormDataToServer = (url: string, formState: FormState) 
 		});
 };
 
-export const sendLoginFormDataToServer = (url: string, formState: FormState) => {
+export const sendLoginFormDataToServer = (url: string, formState: LoginInformation) => {
 	fetch(url, {
 		method: "POST",
 		credentials: "include",

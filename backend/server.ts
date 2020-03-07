@@ -17,6 +17,7 @@ initializeLocalStrategy();
 app.use(express.json());
 app.use(cors({credentials: true, origin: "http://localhost:1234"}));
 app.use(morgan("dev"));
+app.use(flash());
 app.use(
 	session({
 		secret: "lollercauster",
@@ -24,8 +25,6 @@ app.use(
 		saveUninitialized: false
 	})
 );
-app.use(flash());
-
 app.use(passport.initialize());
 app.use(passport.session());
 
