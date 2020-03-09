@@ -52,9 +52,9 @@ const initializeLocalStrategy = () => {
 		const sql = `SELECT username FROM ${Tables.users} WHERE username = ?;`;
 
 		db.get(sql, id, (err, row) => {
-			/* db.close(err =>
+			db.close(err =>
 				err ? console.error(err) : console.log("Closed the database connection")
-			); */
+			);
 			if (err) return done(err);
 			if (!row) return done(null, false);
 			return done(null, row);

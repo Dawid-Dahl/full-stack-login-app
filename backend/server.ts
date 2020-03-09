@@ -1,7 +1,7 @@
 import express from "express";
 import apiRouter from "./api/routes/api";
 import "dotenv/config";
-import cors from "cors";
+/* import cors from "cors"; */
 import errorhandler from "errorhandler";
 import morgan from "morgan";
 import initializeLocalStrategy from "./api/config/passport-config";
@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5000;
 initializeLocalStrategy();
 
 app.use(express.json());
-app.use(cors({credentials: true, origin: "http://localhost:1234"}));
+/* app.use(cors({credentials: true, origin: true})); */
 app.use(morgan("dev"));
 app.use(flash());
 app.use(

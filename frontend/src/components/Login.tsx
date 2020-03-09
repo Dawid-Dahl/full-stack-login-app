@@ -7,10 +7,7 @@ const Login = () => {
 	return (
 		<div className="wrap">
 			<h1 className="login">LOGIN</h1>
-			<LoginForm
-				postFetchAction={sendLoginFormDataToServer}
-				postUrl="http://localhost:5000/api/login"
-			/>
+			<LoginForm postFetchAction={sendLoginFormDataToServer} postUrl="/api/login" />
 			<Link to="/register" className="loginLink">
 				Go To Registration
 			</Link>

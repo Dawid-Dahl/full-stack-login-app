@@ -9,7 +9,7 @@ const Registration = () => {
 			<h1 className="registration">REGISTRATION</h1>
 			<RegistrationForm
 				postFetchAction={sendRegisterFormDataToServer}
-				postUrl="http://localhost:5000/api/register"
+				postUrl="/api/register"
 			/>
 			<Link to="/login" className="registrationLink">
 				Go To Login

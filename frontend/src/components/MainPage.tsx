@@ -4,21 +4,19 @@ import {uppercaseFirstLetter} from "../utils/utils";
 
 export const MainPage = () => {
 	let history = useHistory();
-	const [user, setUser] = useState("No Username");
+	const [user, setUser] = useState("");
 
 	useEffect(() => {
-		fetch("http://localhost:5000/api/main", {method: "GET", credentials: "include"})
+		fetch("/api/main", {method: "GET", credentials: "include"})
 			.then(res => {
-				console.log("poop1111");
-				console.log(res);
 				if (res.redirected) {
 					location.href = res.url;
 				} else {
-					console.log("poop");
 					return res.json();
 				}
 			})
-			.then(data => setUser(data.username));
+			.then(data => setUser(data.username))
+			.catch(err => console.log(err));
 	}, []);
 
 	return (
