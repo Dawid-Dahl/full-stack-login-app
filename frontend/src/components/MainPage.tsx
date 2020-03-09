@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {useHistory} from "react-router-dom";
 import {uppercaseFirstLetter} from "../utils/utils";
 
 export const MainPage = () => {
-	let history = useHistory();
 	const [user, setUser] = useState("");
 
 	useEffect(() => {
