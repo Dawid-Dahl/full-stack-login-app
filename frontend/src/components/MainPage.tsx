@@ -5,7 +5,7 @@ export const MainPage = () => {
 	const [user, setUser] = useState("");
 
 	useEffect(() => {
-		fetch("/api/main", {method: "GET", credentials: "include"})
+		fetch("/api/main")
 			.then(res => {
 				if (res.redirected) {
 					location.href = res.url;
