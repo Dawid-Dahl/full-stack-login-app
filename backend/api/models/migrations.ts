@@ -22,7 +22,8 @@ db.serialize(() => {
 			"username" TEXT NOT NULL UNIQUE,
 			"email" TEXT NOT NULL UNIQUE,
 			"password" TEXT NOT NULL,
-			"date_added" TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+			"date_added" TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			"admin" BOOLEAN NOT NULL DEFAULT 0
 		);`,
 		err => (err ? console.error(err) : console.log(`Table ${Tables.users} added successfully`))
 	);

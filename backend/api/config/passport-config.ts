@@ -49,7 +49,7 @@ const initializeLocalStrategy = () => {
 			err ? console.error(err) : console.log("Connected to the SQLite database")
 		);
 
-		const sql = `SELECT username FROM ${Tables.users} WHERE username = ?;`;
+		const sql = `SELECT username, email, admin FROM ${Tables.users} WHERE username = ?;`;
 
 		db.get(sql, id, (err, row) => {
 			db.close(err =>
