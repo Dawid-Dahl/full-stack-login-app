@@ -9,7 +9,7 @@ loginRouter.get("/", (req, res) => {
 
 loginRouter.post("/", passport.authenticate("local"), (req, res) => {
 	console.log(req.user);
-	res.send("Login correct!");
+	res.redirect("http://localhost:1234/");
 });
 
 export default loginRouter;

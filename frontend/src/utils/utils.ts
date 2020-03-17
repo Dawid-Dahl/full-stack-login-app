@@ -28,10 +28,11 @@ export const sendRegisterFormDataToServer = (url: string, formState: FormState) 
 export const sendLoginFormDataToServer = (url: string, formState: LoginInformation) => {
 	fetch(url, {
 		method: "POST",
-		credentials: "include",
 		headers: {
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify(formState)
-	}).then(res => console.log(res));
+	})
+		.then(res => (res.redirected ? (alert("YOU LOGGED IN!"), (location.href = res.url)) : null))
+		.catch(err => console.error(err));
 };

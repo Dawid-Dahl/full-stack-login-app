@@ -25,7 +25,7 @@ export const ensureAdmin = (req: Request, res: Response, next: NextFunction) => 
 		next();
 	} else {
 		console.log("NOT AN ADMIN, redirecting!");
-		res.redirect("http://localhost:1234/login");
+		res.redirect("http://localhost:1234/main");
 	}
 };
 

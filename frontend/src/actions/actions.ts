@@ -1,25 +1,22 @@
-export const increment1 = (payload: any = null) =>
+export const checkIfLoggedIn = (payload: boolean) =>
 	({
-		type: "INCREMENT_1",
+		type: "CHECK_IF_LOGGED_IN",
 		payload
 	} as const);
-export const increment5 = (payload: any = null) =>
+
+export const activateIsFetching = (payload?: any) =>
 	({
-		type: "INCREMENT_5",
+		type: "ACTIVATE_IS_FETCHING",
 		payload
 	} as const);
-export const decrement1 = (payload: any = null) =>
+
+export const deactivateIsFetching = (payload?: any) =>
 	({
-		type: "DECREMENT_1",
+		type: "DEACTIVATE_IS_FETCHING",
 		payload
 	} as const);
-export const decrement5 = (payload: any = null) =>
-	({
-		type: "DECREMENT_5",
-		payload
-	} as const);
+
 export type ActionTypes =
-	| ReturnType<typeof increment1>
-	| ReturnType<typeof increment5>
-	| ReturnType<typeof decrement1>
-	| ReturnType<typeof decrement5>;
+	| ReturnType<typeof checkIfLoggedIn>
+	| ReturnType<typeof activateIsFetching>
+	| ReturnType<typeof deactivateIsFetching>;

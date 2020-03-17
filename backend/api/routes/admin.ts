@@ -4,7 +4,7 @@ import {ensureAdmin} from "../utils/middleware";
 const adminRouter = express.Router();
 
 adminRouter.get("/", ensureAdmin, (req, res) => {
-	res.json("This is the Admin GET route.");
+	res.end();
 });
 
 export default adminRouter;

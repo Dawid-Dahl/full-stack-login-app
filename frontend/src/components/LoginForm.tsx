@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import Input from "./Input";
 import {LoginInformation} from "../types/types";
 
@@ -15,8 +15,6 @@ const LoginForm: React.FC<Props> = ({postFetchAction, postUrl}) => {
 		email,
 		password
 	});
-
-	useEffect(() => {}, []);
 
 	return (
 		<div>

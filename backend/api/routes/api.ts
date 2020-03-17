@@ -6,6 +6,15 @@ import adminRouter from "./admin";
 
 const apiRouter = express.Router();
 
+apiRouter.get("/isLoggedIn", (req, res) => {
+	res.json(req.user ? true : false);
+});
+
+apiRouter.get("/logout", (req, res) => {
+	req.logOut();
+	res.redirect("/login");
+});
+
 apiRouter.use("/register", registerRouter);
 apiRouter.use("/login", loginRouter);
 apiRouter.use("/main", mainRouter);
