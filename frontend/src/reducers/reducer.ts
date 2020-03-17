@@ -1,4 +1,4 @@
-import {ActionTypes} from "../actions/actions";
+import {ActionTypes, User} from "../actions/actions";
 
 enum ActionSuffix {
 	fulfilled = "FULFILLED",
@@ -9,12 +9,14 @@ enum ActionSuffix {
 export type ReducerState = {
 	isLoggedIn: boolean;
 	isFetching: boolean;
+	user: User | null;
 	error: Error | null;
 };
 
 const initialState: ReducerState = {
 	isLoggedIn: false,
 	isFetching: false,
+	user: null,
 	error: null
 } as const;
 
@@ -25,9 +27,11 @@ const reducer = (
 	switch (type) {
 		case "CHECK_IF_LOGGED_IN":
 			return {...state, isLoggedIn: payload};
-		case "ACTIVATE_IS_FETCHING":
+		case `GET_USER_${ActionSuffix.pending}`:
 			return {...state, isFetching: true};
-		case "DEACTIVATE_IS_FETCHING":
+		case `GET_USER_${ActionSuffix.fulfilled}`:
+			return {...state, isFetching: false, user: payload};
+		case `GET_USER_${ActionSuffix.rejected}`:
 			return {...state, isFetching: false};
 		default:
 			return state;

@@ -33,6 +33,6 @@ export const sendLoginFormDataToServer = (url: string, formState: LoginInformati
 		},
 		body: JSON.stringify(formState)
 	})
-		.then(res => (res.redirected ? (alert("YOU LOGGED IN!"), (location.href = res.url)) : null))
+		.then(res => (res.redirected ? (location.href = res.url) : null))
 		.catch(err => console.error(err));
 };
