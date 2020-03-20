@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {uppercaseFirstLetter} from "../utils/utils";
 import Navbar from "./Navbar";
 import {useDispatch, useSelector} from "react-redux";
@@ -13,6 +13,8 @@ export const MainPage = () => {
 
 	useEffect(() => {
 		dispatch(getUser());
+		const flashAlert = document.querySelector(".alert-flash__wrapper")
+		flashAlert?.classList.add("active")
 	}, []);
 
 	return (

@@ -6,7 +6,6 @@ import morgan from "morgan";
 import initializeLocalStrategy from "./api/config/passport-config";
 import session from "express-session";
 import passport from "passport";
-import flash from "express-flash";
 const SQLiteStore = require("connect-sqlite3")(session);
 
 const app = express();
@@ -16,7 +15,6 @@ initializeLocalStrategy();
 
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(flash());
 app.use(
 	session({
 		store: new SQLiteStore({

@@ -13,16 +13,23 @@ export const sendRegisterFormDataToServer = (url: string, formState: FormState) 
 		},
 		body: JSON.stringify(formState)
 	})
-		.then(res => res.text())
+		.then(res => {
+			if (res.redirected) {
+				location.href = res.url
+			} else {
+				return res.text()
+			}
+		})
 		.then(data => {
-			if (data.match(/UNIQUE constraint failed: Users.username/)) {
+			if (data?.match(/UNIQUE constraint failed: Users.username/)) {
 				alert("Choose another username, this one already exists.");
-			} else if (data.match(/UNIQUE constraint failed: Users.email/)) {
+			} else if (data?.match(/UNIQUE constraint failed: Users.email/)) {
 				alert("Choose another email, this one already exists.");
 			} else {
 				return;
 			}
-		});
+		})
+		.catch(err => console.error(err));
 };
 
 export const sendLoginFormDataToServer = (url: string, formState: LoginInformation) => {

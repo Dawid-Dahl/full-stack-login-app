@@ -1,15 +1,19 @@
-import {AsyncAction} from "redux-promise-middleware";
-
-export type User = {
-	username: string;
-	email: string;
-	admin: number;
-};
+import {User} from "./actionTypes";
 
 export const checkIfLoggedIn = (payload: boolean) =>
 	({
 		type: "CHECK_IF_LOGGED_IN",
 		payload
+	} as const);
+
+export const enableJustRegistered = () =>
+	({
+		type: "ENABLE_JUST_REGISTERED"
+	} as const);
+
+export const disableJustRegistered = () =>
+	({
+		type: "DISABLE_JUST_REGISTERED"
 	} as const);
 
 export const getUser = () =>
@@ -35,7 +39,6 @@ type GetUserAction = {
 
 type GetUserPendingAction = {
 	type: "GET_USER_PENDING";
-	payload: any;
 };
 
 type GetUserFulfilledAction = {
@@ -43,8 +46,15 @@ type GetUserFulfilledAction = {
 	payload: User;
 };
 
+type GetUserRejectedAction = {
+	type: "GET_USER_REJECTED";
+};
+
 export type ActionTypes =
 	| ReturnType<typeof checkIfLoggedIn>
+	| ReturnType<typeof enableJustRegistered>
+	| ReturnType<typeof disableJustRegistered>
 	| GetUserAction
 	| GetUserPendingAction
-	| GetUserFulfilledAction;
+	| GetUserFulfilledAction
+	| GetUserRejectedAction;

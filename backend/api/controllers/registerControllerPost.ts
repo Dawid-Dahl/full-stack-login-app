@@ -28,7 +28,7 @@ const registerControllerPost = (req: Request, res: Response) => {
 					res.status(500).send(`There was an error registering the user: ${err}`);
 				} else {
 					console.log("Inserted entry successfully");
-					res.status(201).send("Inserted entry successfully");
+					res.redirect("http://localhost:1234/login");
 					db.close(err =>
 						err ? console.error(err) : console.log("Closed the database connection")
 					);

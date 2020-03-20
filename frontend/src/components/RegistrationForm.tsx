@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, Dispatch} from "react";
 import Input from "./Input";
 import {FormState} from "../types/types";
 
