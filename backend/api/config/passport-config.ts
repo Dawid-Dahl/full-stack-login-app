@@ -40,11 +40,9 @@ const initializeLocalStrategy = () => {
 	);
 
 	passport.serializeUser((user: User, done) => {
-		console.log("INSIDE SERIALIZATION!");
 		done(null, user.username);
 	});
 	passport.deserializeUser((id, done) => {
-		console.log("INSIDE DE-SERIALIZATION!");
 		const db = new sqlite3.Database(dbPath, err =>
 			err ? console.error(err) : console.log("Connected to the SQLite database")
 		);

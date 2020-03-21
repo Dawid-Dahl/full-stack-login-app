@@ -5,6 +5,18 @@ export const checkIfPasswordsMatch = (password: string, confirmPassword: string)
 
 export const uppercaseFirstLetter = (str: string) => str[0].toUpperCase() + str.slice(1);
 
+const flashMessage = (msg: string) => {
+	const flashAlert = document.querySelector(".alert-flash__wrapper")
+	const flashText = document.querySelector(".alert-flash__text")
+
+	flashText!.textContent = msg;
+	flashAlert?.classList.add("active");
+
+	setTimeout(() => {
+		flashAlert?.classList.remove("active");
+	}, 2000)
+}
+
 export const sendRegisterFormDataToServer = (url: string, formState: FormState) => {
 	fetch(url, {
 		method: "POST",
@@ -15,6 +27,7 @@ export const sendRegisterFormDataToServer = (url: string, formState: FormState) 
 	})
 		.then(res => {
 			if (res.redirected) {
+				flashMessage("SUCCEEEEESSFUL REGISTRATION!")
 				location.href = res.url
 			} else {
 				return res.text()

@@ -7,6 +7,8 @@ import {MainPage} from "./components/MainPage";
 import {AdminPage} from "./components/AdminPage";
 import {checkIfLoggedIn} from "./actions/actions";
 import {useDispatch} from "react-redux";
+import {AlertFlash} from "./components/AlertFlash";
+import {PrivateRoute} from "./components/PrivateRoute";
 
 const App: React.FC = () => {
 	const dispatch = useDispatch();
@@ -19,12 +21,13 @@ const App: React.FC = () => {
 
 	return (
 		<>
+			<AlertFlash message="You registered successfully!" />
 			<Switch>
-				<Route exact path="/" component={MainPage} />
+				<PrivateRoute exact path="/" component={MainPage} />
 				<Route path="/register" component={Registration} />
 				<Route path="/login" component={Login} />
-				<Route path="/main" component={MainPage} />
-				<Route path="/admin" component={AdminPage} />
+				<PrivateRoute path="/main" component={MainPage} />
+				<PrivateRoute path="/admin" component={AdminPage} />
 			</Switch>
 		</>
 	);

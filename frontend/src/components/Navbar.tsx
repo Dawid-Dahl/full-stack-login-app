@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 type Props = {
 	forComponent: string;
@@ -8,11 +9,11 @@ const Navbar: React.FC<Props> = ({forComponent}) => {
 	return (
 		<div className="nav-wrapper">
 			{forComponent === "main" ? (
-				<a href="/admin">Admin-Page</a>
+				<Link to="/admin">Admin-Page</Link>
 			) : (
-				<a href="/main">Main-Page</a>
+				<Link to="/main">Main-Page</Link>
 			)}
-			<a href="/api/logout">Logout</a>
+			<Link to="/login">Logout</Link>
 		</div>
 	);
 };

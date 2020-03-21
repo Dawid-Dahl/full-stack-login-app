@@ -6,6 +6,7 @@ import morgan from "morgan";
 import initializeLocalStrategy from "./api/config/passport-config";
 import session from "express-session";
 import passport from "passport";
+import flash from "connect-flash";
 const SQLiteStore = require("connect-sqlite3")(session);
 
 const app = express();
@@ -28,6 +29,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 app.use("/api", apiRouter);
 

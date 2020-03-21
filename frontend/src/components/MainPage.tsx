@@ -13,8 +13,6 @@ export const MainPage = () => {
 
 	useEffect(() => {
 		dispatch(getUser());
-		const flashAlert = document.querySelector(".alert-flash__wrapper")
-		flashAlert?.classList.add("active")
 	}, []);
 
 	return (
