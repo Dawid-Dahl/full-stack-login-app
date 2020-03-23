@@ -12,15 +12,6 @@ export const ensureAuthenticated = (req: Request, res: Response, next: NextFunct
 	if (req.isAuthenticated()) {
 		next();
 	} else {
-		res.status(401).send("Not authenticated!")
-	}
-};
-
-export const ensureAdmin = (req: Request, res: Response, next: NextFunction) => {
-	if (req.isAuthenticated() && req.user?.admin === 1) {
-		res.json(true)
-		next();
-	} else {
-		res.json(false)
+		res.status(401).send("Not authenticated!");
 	}
 };

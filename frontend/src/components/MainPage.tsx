@@ -11,13 +11,12 @@ interface Props extends RouteComponentProps {}
 export const MainPage: React.FC<Props> = ({history}) => {
 	const dispatch = useDispatch();
 
-	const isLoggedIn = useSelector((state: RootState) => state.reducer.isLoggedIn);
 	const user = useSelector((state: RootState) => state.reducer.user);
 	const isFetching = useSelector((state: RootState) => state.reducer.isFetching);
 
 	useEffect(() => {
 		dispatch(getUser());
-	}, [isLoggedIn]);
+	}, []);
 
 	return (
 		<div className="wrapper">

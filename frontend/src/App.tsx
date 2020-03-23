@@ -9,9 +9,12 @@ import {AlertFlash} from "./components/AlertFlash";
 import {PrivateRoute} from "./components/PrivateRoute";
 import {useSelector} from "react-redux";
 import {RootState} from "./store";
+import {AdminRoute} from "./components/AdminRoute";
+import {isUserAdmin} from "./utils/utils";
 
 const App: React.FC = () => {
 	const isLoggedIn = useSelector((state: RootState) => state.reducer.isLoggedIn);
+	const user = useSelector((state: RootState) => state.reducer.user);
 
 	return (
 		<>
@@ -20,7 +23,12 @@ const App: React.FC = () => {
 				<Route path="/register" component={Registration} />
 				<Route path="/login" component={Login} />
 				<PrivateRoute path="/main" component={MainPage} isLoggedIn={isLoggedIn} />
-				<PrivateRoute path="/admin" component={AdminPage} isLoggedIn={isLoggedIn} />
+				<AdminRoute
+					path="/admin"
+					component={AdminPage}
+					isLoggedIn={isLoggedIn}
+					isAdmin={isUserAdmin(user)}
+				/>
 				<PrivateRoute path="/" component={MainPage} isLoggedIn={isLoggedIn} />
 			</Switch>
 		</>
