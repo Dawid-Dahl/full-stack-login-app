@@ -24,7 +24,6 @@ const Navbar: React.FC<Props> = ({forComponent}) => {
 					fetch("/api/logout")
 						.then(res => res.json())
 						.then(data => {
-							console.log("POOOP");
 							flashMessage(data);
 							dispatch(logOut());
 						});

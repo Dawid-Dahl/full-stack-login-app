@@ -4,12 +4,47 @@ import {Provider} from "react-redux";
 import App from "./App";
 import store from "./store";
 import {BrowserRouter as Router, Route} from "react-router-dom";
+import {logIn, logOut} from "./actions/actions";
+import {User} from "./actions/actionTypes";
 
-ReactDOM.render(
-	<Provider store={store}>
-		<Router>
-			<Route path="/" component={App} />
-		</Router>
-	</Provider>,
-	document.getElementById("root")
-);
+fetch("http://localhost:5000/api/isAuthenticated", {
+	credentials: "include"
+})
+	.then(res => {
+		if (res.ok) {
+			store.dispatch(logIn());
+			return res.json();
+		} else {
+			store.dispatch(logOut());
+			ReactDOM.render(
+				<Provider store={store}>
+					<Router>
+						<Route path="/" component={App} />
+					</Router>
+				</Provider>,
+				document.getElementById("root")
+			);
+		}
+	})
+	.then((data: User) => {
+		store.dispatch({type: "GET_USER_FULFILLED", payload: data});
+		ReactDOM.render(
+			<Provider store={store}>
+				<Router>
+					<Route path="/" component={App} />
+				</Router>
+			</Provider>,
+			document.getElementById("root")
+		);
+	})
+	.catch(err => {
+		console.error(err);
+		ReactDOM.render(
+			<Provider store={store}>
+				<Router>
+					<Route path="/" component={App} />
+				</Router>
+			</Provider>,
+			document.getElementById("root")
+		);
+	});

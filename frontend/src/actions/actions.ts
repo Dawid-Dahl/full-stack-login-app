@@ -13,7 +13,7 @@ export const logOut = () =>
 export const getUser = () =>
 	({
 		type: "GET_USER",
-		payload: fetch("/api/main")
+		payload: fetch("/api/isAuthenticated")
 			.then(res =>
 				res.ok
 					? res.json()

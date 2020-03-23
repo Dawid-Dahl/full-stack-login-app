@@ -6,6 +6,7 @@ import morgan from "morgan";
 import initializeLocalStrategy from "./api/config/passport-config";
 import session from "express-session";
 import passport from "passport";
+import cors from "cors";
 const SQLiteStore = require("connect-sqlite3")(session);
 
 const app = express();
@@ -13,6 +14,12 @@ const PORT = process.env.PORT || 5000;
 
 initializeLocalStrategy();
 
+app.use(
+	cors({
+		origin: "http://localhost:1234",
+		credentials: true
+	})
+);
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(

@@ -1,15 +1,13 @@
 import express from "express";
 import registerRouter from "./register";
 import loginRouter from "./login";
-import mainRouter from "./main";
+import {ensureAuthenticated} from "../utils/middleware";
 
 const apiRouter = express.Router();
 
-apiRouter.get("/isAuthenticated", (req, res, next) =>
-	req.isAuthenticated()
-		? res.status(200).json("User is authenticated!")
-		: res.status(401).json("User is not authenticated!")
-);
+apiRouter.get("/isAuthenticated", ensureAuthenticated, (req, res) => {
+	res.json(req.user);
+});
 
 apiRouter.get("/logout", (req, res) => {
 	req.logOut();
@@ -18,6 +16,5 @@ apiRouter.get("/logout", (req, res) => {
 
 apiRouter.use("/register", registerRouter);
 apiRouter.use("/login", loginRouter);
-apiRouter.use("/main", mainRouter);
 
 export default apiRouter;

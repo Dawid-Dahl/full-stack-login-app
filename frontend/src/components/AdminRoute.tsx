@@ -20,8 +20,11 @@ export const AdminRoute: React.FC<Props> = ({
 			render={props =>
 				isLoggedIn && isAdmin ? (
 					<Component {...props} />
-				) : (
-					(flashMessage("You are not an admin.", true),
+				) : isLoggedIn && !isAdmin ? (
+					((() =>
+						setTimeout(() => {
+							flashMessage("You are not an admin", true);
+						}, 50))(),
 					(
 						<Redirect
 							to={{
@@ -29,6 +32,12 @@ export const AdminRoute: React.FC<Props> = ({
 							}}
 						/>
 					))
+				) : (
+					<Redirect
+						to={{
+							pathname: "/login"
+						}}
+					/>
 				)
 			}
 		/>
