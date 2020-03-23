@@ -4,16 +4,20 @@ import Navbar from "./Navbar";
 import {useDispatch, useSelector} from "react-redux";
 import {getUser} from "../actions/actions";
 import {RootState} from "../store";
+import {RouteComponentProps} from "react-router-dom";
 
-export const MainPage = () => {
+interface Props extends RouteComponentProps {}
+
+export const MainPage: React.FC<Props> = ({history}) => {
 	const dispatch = useDispatch();
 
+	const isLoggedIn = useSelector((state: RootState) => state.reducer.isLoggedIn);
 	const user = useSelector((state: RootState) => state.reducer.user);
 	const isFetching = useSelector((state: RootState) => state.reducer.isFetching);
 
 	useEffect(() => {
 		dispatch(getUser());
-	}, []);
+	}, [isLoggedIn]);
 
 	return (
 		<div className="wrapper">

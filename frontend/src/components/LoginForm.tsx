@@ -1,15 +1,21 @@
-import React, {useState} from "react";
+import React, {useState, ReactText} from "react";
+import {withRouter, RouteComponentProps} from "react-router-dom";
 import Input from "./Input";
 import {LoginInformation} from "../types/types";
+import {flashMessage} from "../utils/utils";
+import {useDispatch} from "react-redux";
+import {logIn} from "../actions/actions";
 
-type Props = {
-	postFetchAction: (url: string, formState: LoginInformation) => void;
+interface Props extends RouteComponentProps {
 	postUrl: string;
-};
+	redirectUrl: string;
+}
 
-const LoginForm: React.FC<Props> = ({postFetchAction, postUrl}) => {
+const LoginForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+
+	const dispatch = useDispatch();
 
 	const turnFormStateIntoObj = (): LoginInformation => ({
 		email,
@@ -23,7 +29,22 @@ const LoginForm: React.FC<Props> = ({postFetchAction, postUrl}) => {
 				className="form"
 				onSubmit={e => {
 					e.preventDefault();
-					postFetchAction(postUrl, turnFormStateIntoObj());
+					fetch(postUrl, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(turnFormStateIntoObj())
+					})
+						.then(res => {
+							if (res.ok) {
+								dispatch(logIn());
+								history.push(redirectUrl);
+							} else {
+								flashMessage("Login failed. Try again!");
+							}
+						})
+						.catch(err => console.error(err));
 					e.currentTarget.reset();
 				}}
 			>
@@ -51,4 +72,4 @@ const LoginForm: React.FC<Props> = ({postFetchAction, postUrl}) => {
 	);
 };
 
-export default LoginForm;
+export default withRouter(LoginForm);

@@ -1,13 +1,14 @@
 import React from "react";
 import LoginForm from "./LoginForm";
-import {Link} from "react-router-dom";
-import {sendLoginFormDataToServer} from "../utils/utils";
+import {Link, RouteComponentProps} from "react-router-dom";
 
-const Login = () => {
+interface Props extends RouteComponentProps {}
+
+const Login: React.FC<Props> = () => {
 	return (
 		<div className="wrap">
 			<h1 className="login">LOGIN</h1>
-			<LoginForm postFetchAction={sendLoginFormDataToServer} postUrl="/api/login" />
+			<LoginForm postUrl="/api/login" redirectUrl="/main" />
 			<Link to="/register" className="loginLink">
 				Go To Registration
 			</Link>

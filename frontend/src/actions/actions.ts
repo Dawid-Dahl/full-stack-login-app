@@ -1,32 +1,26 @@
 import {User} from "./actionTypes";
 
-export const checkIfLoggedIn = (payload: boolean) =>
+export const logIn = () =>
 	({
-		type: "CHECK_IF_LOGGED_IN",
-		payload
+		type: "LOG_IN"
 	} as const);
 
-export const enableJustRegistered = () =>
+export const logOut = () =>
 	({
-		type: "ENABLE_JUST_REGISTERED"
-	} as const);
-
-export const disableJustRegistered = () =>
-	({
-		type: "DISABLE_JUST_REGISTERED"
+		type: "LOG_OUT"
 	} as const);
 
 export const getUser = () =>
 	({
 		type: "GET_USER",
 		payload: fetch("/api/main")
-			.then(res => {
-				if (res.redirected) {
-					location.href = res.url;
-				} else {
-					return res.json();
-				}
-			})
+			.then(res =>
+				res.ok
+					? res.json()
+					: (() => {
+							throw new Error("Failed to get the user!");
+					  })()
+			)
 			.catch(err => {
 				console.log(err);
 			})
@@ -51,9 +45,8 @@ type GetUserRejectedAction = {
 };
 
 export type ActionTypes =
-	| ReturnType<typeof checkIfLoggedIn>
-	| ReturnType<typeof enableJustRegistered>
-	| ReturnType<typeof disableJustRegistered>
+	| ReturnType<typeof logIn>
+	| ReturnType<typeof logOut>
 	| GetUserAction
 	| GetUserPendingAction
 	| GetUserFulfilledAction

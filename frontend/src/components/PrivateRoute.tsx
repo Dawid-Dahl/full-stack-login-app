@@ -1,24 +1,22 @@
 import React from "react";
-import {Route, Redirect, RouteProps} from "react-router-dom";
+import {Route, RouteProps, Redirect} from "react-router-dom";
 
-const fakeAuth = {
-	isAuthenticated: true
-};
+interface Props extends RouteProps {
+	component: any;
+	isLoggedIn: boolean;
+}
 
-interface Props extends RouteProps {}
-
-export const PrivateRoute: React.FC<Props> = ({children, ...rest}) => {
+export const PrivateRoute: React.FC<Props> = ({component: Component, isLoggedIn, ...rest}) => {
 	return (
 		<Route
 			{...rest}
-			render={({location}) =>
-				fakeAuth.isAuthenticated ? (
-					children
+			render={props =>
+				isLoggedIn ? (
+					<Component {...props} />
 				) : (
 					<Redirect
 						to={{
-							pathname: "/login",
-							state: {from: location}
+							pathname: "/login"
 						}}
 					/>
 				)

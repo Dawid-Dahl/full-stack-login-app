@@ -1,13 +1,25 @@
 import React, {useState} from "react";
 import Input from "./Input";
 import {FormState} from "../types/types";
+import { flashMessage } from "../utils/utils";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
-type Props = {
-	postFetchAction: (url: string, formState: FormState) => void;
+interface Props extends RouteComponentProps {
 	postUrl: string;
+	redirectUrl: string
 };
 
-const RegistrationForm: React.FC<Props> = ({postFetchAction, postUrl}) => {
+const alertIfValueAlreadyExistsInDb = (data: string | undefined) => {
+	if (data?.match(/UNIQUE constraint failed: Users.username/)) {
+		flashMessage("Choose another username, this one already exists.")
+	} else if (data?.match(/UNIQUE constraint failed: Users.email/)) {
+		flashMessage("Choose another email, this one already exists.");
+	} else {
+		return;
+	}
+}
+
+const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -27,7 +39,24 @@ const RegistrationForm: React.FC<Props> = ({postFetchAction, postUrl}) => {
 				className="form"
 				onSubmit={e => {
 					e.preventDefault();
-					postFetchAction(postUrl, turnFormStateIntoObj());
+					fetch(postUrl, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(turnFormStateIntoObj())
+					})
+						.then(res => {
+							if (res.ok) {
+								flashMessage("Registration Successful!")
+								history.push(redirectUrl)
+							} else {
+								flashMessage("Registration failed! Try again!")
+								return res.text()
+							}
+						})
+						.then(data => (console.log("this is the data: " + data), alertIfValueAlreadyExistsInDb(data)))
+						.catch(err => console.error(err));
 					e.currentTarget.reset();
 				}}
 			>
@@ -71,4 +100,4 @@ const RegistrationForm: React.FC<Props> = ({postFetchAction, postUrl}) => {
 	);
 };
 
-export default RegistrationForm;
+export default withRouter(RegistrationForm);

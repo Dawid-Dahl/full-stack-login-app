@@ -25,7 +25,6 @@ const initializeLocalStrategy = () => {
 				if (err) return done(err);
 				if (!row) return done(null, false, {message: "Incorrect user"});
 
-				// is_valid_password
 				const isValidPassword = await bcrypt.compare(password, row.password);
 
 				if (!isValidPassword) {

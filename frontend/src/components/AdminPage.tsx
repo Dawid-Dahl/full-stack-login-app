@@ -1,13 +1,10 @@
-import React, {useEffect} from "react";
+import React from "react";
 import Navbar from "./Navbar";
+import {RouteComponentProps} from "react-router-dom";
 
-export const AdminPage = () => {
-	useEffect(() => {
-		fetch("/api/admin")
-			.then(res => (res.redirected ? (location.href = res.url) : null))
-			.catch(err => console.error(err));
-	}, []);
+interface Props extends RouteComponentProps {}
 
+export const AdminPage: React.FC<Props> = () => {
 	return (
 		<div className="wrapper">
 			<Navbar forComponent="admin" />
