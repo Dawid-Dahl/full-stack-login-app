@@ -93,7 +93,7 @@ const RegistrationForm: React.FC<Props> = ({postUrl, redirectUrl, history}) => {
 					required
 				/>
 				<button type="submit" id="login-button">
-					Login
+					Register
 				</button>
 			</form>
 		</div>
