@@ -1,13 +1,13 @@
 import {Strategy as LocalStrategy} from "passport-local";
-import passport from "passport";
 import sqlite3 from "sqlite3";
 import {Tables} from "../types/enums";
 import bcrypt from "bcrypt";
 import {config} from "dotenv";
 import {User} from "../types/types";
+import {PassportStatic} from "passport";
 config();
 
-const initializeLocalStrategy = () => {
+const initializeLocalStrategy = (passport: PassportStatic) => {
 	const dbPath = process.env.DB_PATH || "";
 
 	passport.use(
